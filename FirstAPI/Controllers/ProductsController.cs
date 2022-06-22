@@ -1,4 +1,5 @@
 ﻿using FirstAPI.DAL;
+using FirstAPI.DTOs.ProductDTOs;
 using FirstAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,32 +61,53 @@ namespace FirstAPI.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
-            List<Product> products = await _context.Products.ToListAsync();
-            return Ok(_context.Products.ToList());
+            List<Product> products = await _context.Products.Where(p => p.DisplayStatus == true).ToListAsync();
+            ProductGetAllDto model = new()
+            {
+                ProductList = products.Select(p => new ProductListItem()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                
+                }).ToList(),
+
+                TotalCount = products.Count
+            };
+            return Ok(model);
         }
 
-        [HttpPost]
-        public IActionResult Create(Product product)
+        [HttpPost("create")]
+        public IActionResult Create(ProductPostDTO productDto)
         {
+            Product product = new()
+            {
+                Name = productDto.Name,
+                Price = productDto.Price,   
+                DisplayStatus = productDto.DisplayStatus
+            };
             _context.Products.Add(product);
             _context.SaveChanges();
-            return NoContent();
+            return Ok(product);
         }
 
 
-        [HttpPut]
+        [HttpPut("edit")]
         public IActionResult Edit(Product product)
         {
             Product existed = _context.Products.FirstOrDefault(p=>p.Id==product.Id);
             if (existed == null) return NotFound();
 
-            _context.Entry(existed).CurrentValues.SetValues(product);
+            existed.Name=product.Name;  
+            existed.Price=product.Price;    
+
+            //_context.Entry(existed).CurrentValues.SetValues(product);
             _context.SaveChanges();
             return Ok(existed);
             
         }
 
-        [HttpDelete]
+        [HttpDelete("delete/{id}")]
         public IActionResult Delete(int id)
         {
             Product product = _context.Products.Find(id);
@@ -94,6 +116,22 @@ namespace FirstAPI.Controllers
             _context.Products.Remove(product);
             _context.SaveChanges();
             return Ok(product);
+        }
+
+        [HttpPatch("change/{id}")]
+        public IActionResult ChangeStatus(int id, string statusStr)
+        {
+            Product product = _context.Products.Find(id);
+            if (product == null) return NotFound();
+            bool status;
+            bool result = bool.TryParse(statusStr, out status);
+
+            if (!result) return BadRequest();
+
+
+            product.DisplayStatus = status;
+            _context.SaveChanges();
+            return Ok();
         }
     }
 }

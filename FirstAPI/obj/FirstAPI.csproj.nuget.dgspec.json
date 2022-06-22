@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\source\\repos\\FirstAPI\\FirstAPI\\FirstAPI.csproj": {}
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\FirstAPI\\FirstAPI\\FirstAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\source\\repos\\FirstAPI\\FirstAPI\\FirstAPI.csproj": {
+    "C:\\Users\\Admin\\OneDrive\\Desktop\\FirstAPI\\FirstAPI\\FirstAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\FirstAPI\\FirstAPI\\FirstAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Desktop\\FirstAPI\\FirstAPI\\FirstAPI.csproj",
         "projectName": "FirstAPI",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\FirstAPI\\FirstAPI\\FirstAPI.csproj",
+        "projectPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\FirstAPI\\FirstAPI\\FirstAPI.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\source\\repos\\FirstAPI\\FirstAPI\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\OneDrive\\Desktop\\FirstAPI\\FirstAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "FluentValidation.AspNetCore": {
+              "target": "Package",
+              "version": "[11.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.17, )"
